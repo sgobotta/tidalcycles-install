@@ -1,3 +1,5 @@
+# Guide to TidalCycles installation
+
 ## Pre requisites
 
 **Install pre-requisites**
@@ -11,8 +13,8 @@ sudo apt-get install g++
 
 ## Install dev library for ALSA applications:
 
-> Sometimes the version of Jack you installed was compiled without Alsa support.
-> You need to either install a version of Jack with it compiled in(The VAST
+> Note: sometimes the version of Jack you installed was compiled without Alsa support.
+> You need to either install a version of Jack with it compiled in (The VAST
 > majority of packages out there fall under this) or build it yourself from
 > source.                                                                        
 
@@ -22,7 +24,7 @@ sudo apt-get install libasound2-dev
 
 ## QT dev tools and ide
 
-Visit the [qt page](https://www.qt.io/download-thank-you?os=linux) and download the linux x64 version, then execute installer:
+Visit the [**qt page**](https://www.qt.io/download-thank-you?os=linux) and download the linux x64 version, then execute installer:
 
 > I later found out that this is only needed if you want to edit or create custom applications using QT. It has almost nothing to do with qjack
 
@@ -33,7 +35,7 @@ chmod +x qt-unified-linux-x64-3.1.1-online.run
 
 ## Jack Audio
 
-Visit the [jackaudio homepage](http://www.jackaudio.org/downloads/) or get a release from the [releases page](https://github.com/jackaudio/jack2/releases/). [Version 1.9.12](https://github.com/jackaudio/jack2/releases/download/v1.9.12/jack2-1.9.12.tar.gz) or with wget:
+Visit the [**jackaudio homepage**](http://www.jackaudio.org/downloads/) or get a release from the [**releases page**](https://github.com/jackaudio/jack2/releases/). [**Version 1.9.12**](https://github.com/jackaudio/jack2/releases/download/v1.9.12/jack2-1.9.12.tar.gz) or with wget:
 
 ```bash
 wget https://github.com/jackaudio/jack2/releases/download/v1.9.12/jack2-1.9.12.tar.gz
@@ -42,25 +44,32 @@ wget https://github.com/jackaudio/jack2/releases/download/v1.9.12/jack2-1.9.12.t
 sudo ./waf install
 ```
 
-Later when you run SuperCollider or qjackctl, you might need to reconfigure the real-time scheduling for jackd:
+Later when you run `SuperCollider` or `qjackctl`, you might need to reconfigure the real-time scheduling for `jackd`:
 
 ```bash
 dpkg-reconfigure -p high jackd
 ```
 
-If you don't have the dpgk-reconfigure command (it's not the same as dpkg --configure), you can download debconf (which contains the dpkg-reconfigure program) utils from [here](https://snapshot.debian.org/archive/debian/20170521T212524Z/pool/main/d/debconf/debconf_1.5.61.dsc), extract them and the dpkg reconfigure program as follows:
+If you don't have the `dpgk-reconfigure` program, you can download [**debconf utils**](https://snapshot.debian.org/archive/debian/20170521T212524Z/pool/main/d/debconf/debconf_1.5.61.dsc) (which contain `dpkg-reconfigure`), extract them and run the dpkg reconfigure for jackd:
 
 *download debconf utils from debian.org*
 ```bash
-wget https://snapshot.debian.org/archive/debian/20170521T212524Z/pool/main/d/debconf/debconf_1.5.61.dsc
+wget https://snapshot.debian.org/archive/debian/20170521T212524Z/pool/main/d/debconf/debconf_1.5.61.tar.xz
 ```
 
-*reconfigure*
+*extract the `.tar.gz`*
 ```bash
+# tar {eXtract} {Verbosely list files processed (optional) } {to File} <file.tar.xz>
+tar xvf debconf_1.5.61.tar.xz
+```
+
+*reconfigure the real time scheduling for jackd where `-p` is the priority*
+```bash
+cd debconf
 ./dpkg-reconfigure -p high jackd
 ```
 
-A new file 'audio.conf' in /etc/security/limits.d will be created, it should look something like this:
+A new file `audio.conf` in `/etc/security/limits.d` will be created, it should look something like this:
 
 ```
 # Provided by the jackd package.
@@ -81,13 +90,13 @@ A new file 'audio.conf' in /etc/security/limits.d will be created, it should loo
 
 ### Qjackctl pre-requisites
 
-Download qjackctl from [Sourceforge bundles](https://downloads.sourceforge.net/qjackctl/qjackctl-0.5.8.tar.gz)
+Download `qjackctl` from [**Sourceforge bundles**](https://downloads.sourceforge.net/qjackctl/qjackctl-0.5.8.tar.gz)
 
-Install qt5 as default:
+Install `qt5` as default:
 
 > This package sets Qt 5 to be the default Qt version to be used when using
 > development binaries like qmake. It provides a default configuration for
-> qtchooser, but does not prevent alternative Qt installations from being used.
+> `qtchooser`, but does not prevent alternative Qt installations from being used.
 
 ```bash
 aptitude show wt5-default
@@ -129,9 +138,9 @@ sudo make install (because it tries to write in /usr/local/share/applications)
 > QJACKCTL Configuration
 >
 > QjackCtl holds its settings and configuration state per user, in a file
-> located as $HOME/.config/rncbc.org/QjackCtl.conf . Normally, there's no
+> located at `$HOME/.config/rncbc.org/QjackCtl.conf`. Normally, there's no
 > need to edit this file, as it is recreated and rewritten everytime
-> qjackctl is run.
+> `qjackctl` is run.
 
 ## Tidal Cycles
 
@@ -139,10 +148,10 @@ sudo make install (because it tries to write in /usr/local/share/applications)
 
 #### Pre-Requisites
 
-Haskell
-Atom Editor/Vim
-SuperCollider
-Git
+-		Haskell  
+-		Atom Editor/Vim  
+-		SuperCollider  
+-		Git  
 
 #### Install Haskell, Git
 
@@ -154,7 +163,7 @@ sudo apt-get install build-essential cabal-install git
 
 ##### Build/Install binaries/programs
 
-**(Recommended)** Visit the [Supercollider github page](https://github.com/lvm/build-supercollider) and follow the instructions:
+**(Recommended)** Visit the [**Supercollider github page**](https://github.com/lvm/build-supercollider) and follow the instructions:
 
 ```bash
 git clone https://github.com/lvm/build-supercollider/
@@ -212,7 +221,7 @@ SuperDirt maybe to be recompiled in the current SuperCollider instance:
 sc3> SuperDirt
 ```
 
-***(?) it'll be nice to know how to exit the sc3 prompt without having to kill the process.***
+> ***it'll be nice to know how to exit the sc3 prompt without having to kill the process.***
 
 ### Install TidalCycles
 
@@ -229,14 +238,14 @@ cabal install tidal
 
 ## Run the whole thing: test TidalCycles and SuperDirt for the first time
 
-Useful link [start tidal cycles and superdirt for the first time](https://tidalcycles.org/index.php/Start_tidalcycles_and_superdirt_for_the_first_time)
+Useful link [**start tidal cycles and superdirt for the first time**](https://tidalcycles.org/index.php/Start_tidalcycles_and_superdirt_for_the_first_time)
 
 ### Start jack server
 
 +   By using the qt client qjackctl
 +   Or by terminal (todo)
 
-[Download](https://raw.githubusercontent.com/musikinformatik/SuperDirt/develop/superdirt_startup.scd) a sample startup script or use:
+[**Download**](https://raw.githubusercontent.com/musikinformatik/SuperDirt/develop/superdirt_startup.scd) a sample startup script or use:
 
 ### Start SuperCollider
 
@@ -291,12 +300,12 @@ s.latency = 0.3; // increase this if you get "late" messages
 
 ### Boot Tidal .hs file
 
-[BootTidal.hs](https://github.com/tidalcycles/Tidal/blob/master/BootTidal.hs)
+[**BootTidal.hs**](https://github.com/tidalcycles/Tidal/blob/master/BootTidal.hs)
 
 
 ### Dirt samples directory
 
-~/.local/share/SuperCollider/downloaded-quarks/Dirt-Samples
+`~/.local/share/SuperCollider/downloaded-quarks/Dirt-Samples`
 
 ### Run your favourite text editor with the tidalcycles plugin and execute:
 
@@ -308,11 +317,11 @@ d1 $ sound "bd bd"
 
 ## Cheatsheet
 
-### Forwarding ports for the Hydra
+### Forwarding ports for the Hydra editor
 
 Before starting the supercollider server you should add this code.
 
-It will expose some properties in the `/play2` service at port `3333` (it can be changed).
+It will expose some properties in the `/play2` service at port `3333`.
 
 ```
 var addr = NetAddr.new("127.0.0.1", 3333);
